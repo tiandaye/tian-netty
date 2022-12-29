@@ -72,7 +72,10 @@ public class NettyServer {
 						 *
 						 * 然后再调用 addLast() 方法 添加一个逻辑处理器，这个逻辑处理器为的就是在客户端建立连接成功之后，向服务端写数据
 						 */
-						ch.pipeline().addLast(new FirstServerHandler());
+						// ch.pipeline().addLast(new FirstServerHandler());
+
+						// 使用 ClientHandler 来走登录例子
+						ch.pipeline().addLast(new ServerHandler());
 
 						// ch.pipeline().addLast(new StringDecoder());
 						// ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
@@ -81,6 +84,7 @@ public class NettyServer {
 						// 		System.out.println(msg);
 						// 	}
 						// });
+
 					}
 				});
 
@@ -151,7 +155,7 @@ public class NettyServer {
 		// 	}
 		// });
 
-		bind(serverBootstrap, 8000);
+		bind(serverBootstrap, PORT);
 	}
 
 	/**
