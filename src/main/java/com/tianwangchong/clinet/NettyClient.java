@@ -1,5 +1,9 @@
 package com.tianwangchong.clinet;
 
+import com.tianwangchong.clinet.handler.LoginResponseHandler;
+import com.tianwangchong.clinet.handler.MessageResponseHandler;
+import com.tianwangchong.codec.PacketDecoder;
+import com.tianwangchong.codec.PacketEncoder;
 import com.tianwangchong.protocol.PacketCodeC;
 import com.tianwangchong.protocol.request.MessageRequestPacket;
 import com.tianwangchong.util.LoginUtil;
@@ -12,6 +16,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 
 import java.util.Date;
@@ -49,13 +54,32 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        // // ch.pipeline() 返回的是和这条连接相关的逻辑处理链，采用了责任链模式
-                        // // 然后再调用 addLast() 方法 添加一个逻辑处理器，这个逻辑处理器为的就是在客户端建立连接成功之后，向服务端写数据，下面是这个逻辑处理器相关的代码
+                        /**
+                         * ch.pipeline() 返回的是和这条连接相关的逻辑处理链，采用了责任链模式
+                         * 然后再调用 addLast() 方法添加一个逻辑处理器，这个逻辑处理器为的就是在客户端建立连接成功之后，向服务端写数据，下面是这个逻辑处理器相关的代码
+                         */
                         // ch.pipeline().addLast(new FirstClientHandler());
 
-                        // 使用 ClientHandler 来走登录例子
-                        ch.pipeline().addLast(new ClientHandler());
+                        /**
+                         * 使用 ClientHandler 来走登录例子
+                         */
+                        // ch.pipeline().addLast(new ClientHandler());
 
+                        /**
+                         * ByteToMessageDecoder
+                         * SimpleChannelInboundHandler
+                         * MessageToByteEncoder
+                         */
+                        // 基于长度域拆包器
+                        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
+
+                        /**
+                         * StringEncoder
+                         */
                         // ch.pipeline().addLast(new StringEncoder());
                     }
                 });
