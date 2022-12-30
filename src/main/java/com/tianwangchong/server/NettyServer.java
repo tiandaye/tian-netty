@@ -2,6 +2,7 @@ package com.tianwangchong.server;
 
 import com.tianwangchong.codec.PacketDecoder;
 import com.tianwangchong.codec.PacketEncoder;
+import com.tianwangchong.codec.Spliter;
 import com.tianwangchong.server.handler.LoginRequestHandler;
 import com.tianwangchong.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -103,7 +104,8 @@ public class NettyServer {
                          * MessageToByteEncoder
                          */
                         // 基于长度域拆包器
-                        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                        // ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                        // ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());

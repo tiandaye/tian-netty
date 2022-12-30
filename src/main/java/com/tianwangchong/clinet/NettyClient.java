@@ -4,6 +4,7 @@ import com.tianwangchong.clinet.handler.LoginResponseHandler;
 import com.tianwangchong.clinet.handler.MessageResponseHandler;
 import com.tianwangchong.codec.PacketDecoder;
 import com.tianwangchong.codec.PacketEncoder;
+import com.tianwangchong.codec.Spliter;
 import com.tianwangchong.protocol.PacketCodeC;
 import com.tianwangchong.protocol.request.MessageRequestPacket;
 import com.tianwangchong.util.LoginUtil;
@@ -16,7 +17,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 
 import java.util.Date;
@@ -71,7 +71,8 @@ public class NettyClient {
                          * MessageToByteEncoder
                          */
                         // 基于长度域拆包器
-                        ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                        // ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                        ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
