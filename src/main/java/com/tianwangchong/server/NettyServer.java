@@ -1,5 +1,11 @@
 package com.tianwangchong.server;
 
+import com.tianwangchong.server.handler.inbound.InBoundHandlerA;
+import com.tianwangchong.server.handler.inbound.InBoundHandlerB;
+import com.tianwangchong.server.handler.inbound.InBoundHandlerC;
+import com.tianwangchong.server.handler.outbound.OutBoundHandlerA;
+import com.tianwangchong.server.handler.outbound.OutBoundHandlerB;
+import com.tianwangchong.server.handler.outbound.OutBoundHandlerC;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -74,8 +80,22 @@ public class NettyServer {
 						 */
 						// ch.pipeline().addLast(new FirstServerHandler());
 
-						// 使用 ClientHandler 来走登录例子
-						ch.pipeline().addLast(new ServerHandler());
+						/**
+						 * 使用 ClientHandler 来走登录例子
+						 */
+						// ch.pipeline().addLast(new ServerHandler());
+
+						/**
+						 * pipeline 与 channelHandler
+						 */
+						// inBound，处理读数据的逻辑链
+						ch.pipeline().addLast(new InBoundHandlerA());
+						ch.pipeline().addLast(new InBoundHandlerB());
+						ch.pipeline().addLast(new InBoundHandlerC());
+						// outBound，处理写数据的逻辑链
+						ch.pipeline().addLast(new OutBoundHandlerA());
+						ch.pipeline().addLast(new OutBoundHandlerB());
+						ch.pipeline().addLast(new OutBoundHandlerC());
 
 						// ch.pipeline().addLast(new StringDecoder());
 						// ch.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
