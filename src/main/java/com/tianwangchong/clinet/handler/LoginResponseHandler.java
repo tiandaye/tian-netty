@@ -6,9 +6,9 @@ import com.tianwangchong.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import java.util.Date;
-
 /**
+ * 登录响应
+ * <p>
  * Copyright (c) 2022, Bongmi
  * All rights reserved
  * Author: tianwangchong@bongmi.com

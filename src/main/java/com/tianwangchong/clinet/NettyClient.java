@@ -1,6 +1,10 @@
 package com.tianwangchong.clinet;
 
+import com.tianwangchong.clinet.console.ConsoleCommandManager;
+import com.tianwangchong.clinet.console.LoginConsoleCommand;
+import com.tianwangchong.clinet.handler.CreateGroupResponseHandler;
 import com.tianwangchong.clinet.handler.LoginResponseHandler;
+import com.tianwangchong.clinet.handler.LogoutResponseHandler;
 import com.tianwangchong.clinet.handler.MessageResponseHandler;
 import com.tianwangchong.codec.PacketDecoder;
 import com.tianwangchong.codec.PacketEncoder;
@@ -83,7 +87,9 @@ public class NettyClient {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new CreateGroupResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                         /**
@@ -190,6 +196,30 @@ public class NettyClient {
      * @param channel
      */
     private static void startConsoleThread(Channel channel) {
+        // 管理控制台命令执行器
+        ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
+        // 登录控制台命令
+        LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+        // 输入
+        Scanner scanner = new Scanner(System.in);
+
+        new Thread(() -> {
+            while (!Thread.interrupted()) {
+                if (!SessionUtil.hasLogin(channel)) {
+                    loginConsoleCommand.exec(scanner, channel);
+                } else {
+                    consoleCommandManager.exec(scanner, channel);
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 开启控制台线程 - 老代码, 没重构之前
+     *
+     * @param channel
+     */
+    private static void startConsoleThread2(Channel channel) {
         /**
          * 为什么要在这里新创建一个线程来进行接收控制台输入的数据和发送给服务端呢？
          * 解答：

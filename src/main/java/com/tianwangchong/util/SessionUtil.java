@@ -3,6 +3,7 @@ package com.tianwangchong.util;
 import com.tianwangchong.attribute.Attributes;
 import com.tianwangchong.session.Session;
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,6 +18,9 @@ public class SessionUtil {
 
     // userId -> channel 的映射
     private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
+
+    // groupId -> channelGroup 的映射
+    private static final Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
 
     /**
      * 绑定 userId -> channel 的映射
@@ -36,8 +40,10 @@ public class SessionUtil {
      */
     public static void unBindSession(Channel channel) {
         if (hasLogin(channel)) {
-            userIdChannelMap.remove(getSession(channel).getUserId());
+            Session session = getSession(channel);
+            userIdChannelMap.remove(session.getUserId());
             channel.attr(Attributes.SESSION).set(null);
+            System.out.println(session + " 退出登录!");
         }
     }
 
@@ -49,7 +55,7 @@ public class SessionUtil {
      */
     public static boolean hasLogin(Channel channel) {
 
-        return channel.hasAttr(Attributes.SESSION);
+        return getSession(channel) != null;
     }
 
     /**

@@ -4,7 +4,9 @@ import com.tianwangchong.codec.PacketDecoder;
 import com.tianwangchong.codec.PacketEncoder;
 import com.tianwangchong.codec.Spliter;
 import com.tianwangchong.server.handler.AuthHandler;
+import com.tianwangchong.server.handler.CreateGroupRequestHandler;
 import com.tianwangchong.server.handler.LoginRequestHandler;
+import com.tianwangchong.server.handler.LogoutRequestHandler;
 import com.tianwangchong.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -12,7 +14,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -111,6 +112,8 @@ public class NettyServer {
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new AuthHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(new LogoutRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                         /**

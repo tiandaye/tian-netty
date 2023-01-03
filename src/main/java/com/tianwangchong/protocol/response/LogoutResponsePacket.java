@@ -3,29 +3,27 @@ package com.tianwangchong.protocol.response;
 import com.tianwangchong.protocol.Packet;
 import lombok.Data;
 
-import static com.tianwangchong.protocol.command.Command.LOGIN_RESPONSE;
+import static com.tianwangchong.protocol.command.Command.LOGOUT_RESPONSE;
 
 /**
- * 登录响应
+ * 登出响应
  *
- * Copyright (c) 2022, Bongmi
+ * Copyright (c) 2023, Bongmi
  * All rights reserved
  * Author: tianwangchong@bongmi.com
  */
 
 @Data
-public class LoginResponsePacket extends Packet {
-
-    private String userId;
-
-    private String userName;
+public class LogoutResponsePacket extends Packet {
 
     private boolean success;
 
     private String reason;
 
+
     @Override
     public Byte getCommand() {
-        return LOGIN_RESPONSE;
+
+        return LOGOUT_RESPONSE;
     }
 }

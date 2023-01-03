@@ -5,6 +5,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
+ * 消息响应
+ *
  * Copyright (c) 2022, Bongmi
  * All rights reserved
  * Author: tianwangchong@bongmi.com

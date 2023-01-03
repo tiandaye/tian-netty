@@ -3,6 +3,7 @@ package com.tianwangchong.server.handler;
 import com.tianwangchong.protocol.request.LoginRequestPacket;
 import com.tianwangchong.protocol.response.LoginResponsePacket;
 import com.tianwangchong.session.Session;
+import com.tianwangchong.util.IDUtil;
 import com.tianwangchong.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 /**
  * 处理登录请求
- *
+ * <p>
  * Copyright (c) 2022, Bongmi
  * All rights reserved
  * Author: tianwangchong@bongmi.com
@@ -38,9 +39,10 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
         loginResponsePacket.setVersion(loginRequestPacket.getVersion());
         loginResponsePacket.setUserName(loginRequestPacket.getUsername());
+
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
-            String userId = randomUserId();
+            String userId = IDUtil.randomId();
             loginResponsePacket.setUserId(userId);
             System.out.println("[" + loginRequestPacket.getUsername() + "]登录成功");
             SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUsername()), ctx.channel());
@@ -79,10 +81,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return true;
-    }
-
-    private static String randomUserId() {
-        return UUID.randomUUID().toString().split("-")[0];
     }
 
     /**
