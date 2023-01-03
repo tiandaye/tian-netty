@@ -9,7 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
- * 处理消息请求
+ * 消息请求处理器
  * <p>
  * Copyright (c) 2022, Bongmi
  * All rights reserved

@@ -1,13 +1,19 @@
 package com.tianwangchong.protocol;
 
 import com.tianwangchong.protocol.request.CreateGroupRequestPacket;
+import com.tianwangchong.protocol.request.JoinGroupRequestPacket;
+import com.tianwangchong.protocol.request.ListGroupMembersRequestPacket;
 import com.tianwangchong.protocol.request.LoginRequestPacket;
 import com.tianwangchong.protocol.request.LogoutRequestPacket;
 import com.tianwangchong.protocol.request.MessageRequestPacket;
+import com.tianwangchong.protocol.request.QuitGroupRequestPacket;
 import com.tianwangchong.protocol.response.CreateGroupResponsePacket;
+import com.tianwangchong.protocol.response.JoinGroupResponsePacket;
+import com.tianwangchong.protocol.response.ListGroupMembersResponsePacket;
 import com.tianwangchong.protocol.response.LoginResponsePacket;
 import com.tianwangchong.protocol.response.LogoutResponsePacket;
 import com.tianwangchong.protocol.response.MessageResponsePacket;
+import com.tianwangchong.protocol.response.QuitGroupResponsePacket;
 import com.tianwangchong.serialize.Serializer;
 import com.tianwangchong.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -18,12 +24,18 @@ import java.util.Map;
 
 import static com.tianwangchong.protocol.command.Command.CREATE_GROUP_REQUEST;
 import static com.tianwangchong.protocol.command.Command.CREATE_GROUP_RESPONSE;
+import static com.tianwangchong.protocol.command.Command.JOIN_GROUP_REQUEST;
+import static com.tianwangchong.protocol.command.Command.JOIN_GROUP_RESPONSE;
+import static com.tianwangchong.protocol.command.Command.LIST_GROUP_MEMBERS_REQUEST;
+import static com.tianwangchong.protocol.command.Command.LIST_GROUP_MEMBERS_RESPONSE;
 import static com.tianwangchong.protocol.command.Command.LOGIN_REQUEST;
 import static com.tianwangchong.protocol.command.Command.LOGIN_RESPONSE;
 import static com.tianwangchong.protocol.command.Command.LOGOUT_REQUEST;
 import static com.tianwangchong.protocol.command.Command.LOGOUT_RESPONSE;
 import static com.tianwangchong.protocol.command.Command.MESSAGE_REQUEST;
 import static com.tianwangchong.protocol.command.Command.MESSAGE_RESPONSE;
+import static com.tianwangchong.protocol.command.Command.QUIT_GROUP_REQUEST;
+import static com.tianwangchong.protocol.command.Command.QUIT_GROUP_RESPONSE;
 
 /**
  * 解编码
@@ -55,6 +67,12 @@ public class PacketCodeC {
         packetTypeMap.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
         packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        packetTypeMap.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
 
         // 序列化=>序列化类的map
         serializerMap = new HashMap<>();

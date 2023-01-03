@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @author: tianwangchong
  * @date: 2020/11/2 2:45 下午
  */
-public class NettyClient2 {
+public class NettyClient4 {
 
     /**
      * 最大尝试次数

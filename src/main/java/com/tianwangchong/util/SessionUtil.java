@@ -79,4 +79,24 @@ public class SessionUtil {
 
         return userIdChannelMap.get(userId);
     }
+
+    /**
+     * 绑定 groupId -> channelGroup
+     *
+     * @param groupId
+     * @param channelGroup
+     */
+    public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
+        groupIdChannelGroupMap.put(groupId, channelGroup);
+    }
+
+    /**
+     * 通过groupId 获得 channelGroup
+     *
+     * @param groupId
+     * @return
+     */
+    public static ChannelGroup getChannelGroup(String groupId) {
+        return groupIdChannelGroupMap.get(groupId);
+    }
 }

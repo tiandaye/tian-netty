@@ -9,10 +9,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
- * 处理登录请求
+ * 处理登录请求处理器
  * <p>
  * Copyright (c) 2022, Bongmi
  * All rights reserved

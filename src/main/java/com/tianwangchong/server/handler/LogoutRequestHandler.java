@@ -7,7 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
- * 登出请求
+ * 登出请求处理器
  * <p>
  * Copyright (c) 2023, Bongmi
  * All rights reserved

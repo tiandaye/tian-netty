@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
- * 创建群组响应
+ * 创建群组响应处理器
  * <p>
  * Copyright (c) 2023, Bongmi
  * All rights reserved

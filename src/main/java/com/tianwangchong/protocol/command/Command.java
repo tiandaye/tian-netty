@@ -33,4 +33,22 @@ public interface Command {
 
     // 创建群组响应
     Byte CREATE_GROUP_RESPONSE = 8;
+
+    // 群组列表请求
+    Byte LIST_GROUP_MEMBERS_REQUEST = 9;
+
+    // 群组列表响应
+    Byte LIST_GROUP_MEMBERS_RESPONSE = 10;
+
+    // 加入群组请求
+    Byte JOIN_GROUP_REQUEST = 11;
+
+    // 加入群组响应
+    Byte JOIN_GROUP_RESPONSE = 12;
+
+    // 退出群组请求
+    Byte QUIT_GROUP_REQUEST = 13;
+
+    // 退出群组响应
+    Byte QUIT_GROUP_RESPONSE = 14;
 }
