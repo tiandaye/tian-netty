@@ -34,6 +34,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         String userName = loginResponsePacket.getUserName();
         if (loginResponsePacket.isSuccess()) {
             System.out.println("[" + userName + "]登录成功，userId 为: " + loginResponsePacket.getUserId());
+            // 这行是不是没什么用???
             SessionUtil.bindSession(new Session(userId, userName), ctx.channel());
         } else {
             System.out.println("[" + userName + "]登录失败，原因：" + loginResponsePacket.getReason());
@@ -43,5 +44,6 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
         System.out.println("客户端连接被关闭!");
+        // SessionUtil.unBindSession(ctx.channel());
     }
 }
