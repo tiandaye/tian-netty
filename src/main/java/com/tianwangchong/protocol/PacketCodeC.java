@@ -68,6 +68,13 @@ public class PacketCodeC {
         byteBuf.writeBytes(bytes);
     }
 
+    /**
+     * 不用了
+     * @param byteBufAllocator
+     * @param packet
+     * @return
+     */
+    @Deprecated
     public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 1. 创建 ByteBuf 对象
         ByteBuf byteBuf = byteBufAllocator.ioBuffer();
@@ -91,6 +98,7 @@ public class PacketCodeC {
      * @param packet 数据包
      * @return
      */
+    @Deprecated
     public ByteBuf encode(Packet packet) {
         // 1. 创建 ByteBuf 对象
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
