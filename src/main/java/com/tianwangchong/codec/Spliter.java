@@ -6,6 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
+ * 解码前先判断下魔数
+ *
  * Copyright (c) 2022, Bongmi
  * All rights reserved
  * Author: tianwangchong@bongmi.com

@@ -1,6 +1,7 @@
 package com.tianwangchong.protocol;
 
 import com.tianwangchong.protocol.request.CreateGroupRequestPacket;
+import com.tianwangchong.protocol.request.GroupMessageRequestPacket;
 import com.tianwangchong.protocol.request.JoinGroupRequestPacket;
 import com.tianwangchong.protocol.request.ListGroupMembersRequestPacket;
 import com.tianwangchong.protocol.request.LoginRequestPacket;
@@ -8,6 +9,7 @@ import com.tianwangchong.protocol.request.LogoutRequestPacket;
 import com.tianwangchong.protocol.request.MessageRequestPacket;
 import com.tianwangchong.protocol.request.QuitGroupRequestPacket;
 import com.tianwangchong.protocol.response.CreateGroupResponsePacket;
+import com.tianwangchong.protocol.response.GroupMessageResponsePacket;
 import com.tianwangchong.protocol.response.JoinGroupResponsePacket;
 import com.tianwangchong.protocol.response.ListGroupMembersResponsePacket;
 import com.tianwangchong.protocol.response.LoginResponsePacket;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 import static com.tianwangchong.protocol.command.Command.CREATE_GROUP_REQUEST;
 import static com.tianwangchong.protocol.command.Command.CREATE_GROUP_RESPONSE;
+import static com.tianwangchong.protocol.command.Command.GROUP_MESSAGE_REQUEST;
+import static com.tianwangchong.protocol.command.Command.GROUP_MESSAGE_RESPONSE;
 import static com.tianwangchong.protocol.command.Command.JOIN_GROUP_REQUEST;
 import static com.tianwangchong.protocol.command.Command.JOIN_GROUP_RESPONSE;
 import static com.tianwangchong.protocol.command.Command.LIST_GROUP_MEMBERS_REQUEST;
@@ -73,6 +77,8 @@ public class PacketCodeC {
         packetTypeMap.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
         packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
         packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
+        packetTypeMap.put(GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
+        packetTypeMap.put(GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
 
         // 序列化=>序列化类的map
         serializerMap = new HashMap<>();

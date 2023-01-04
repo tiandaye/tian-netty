@@ -5,6 +5,7 @@ import com.tianwangchong.protocol.response.LoginResponsePacket;
 import com.tianwangchong.session.Session;
 import com.tianwangchong.util.IDUtil;
 import com.tianwangchong.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -18,7 +19,13 @@ import java.util.Date;
  * Author: tianwangchong@bongmi.com
  */
 
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
+
+    protected LoginRequestHandler() {
+    }
 
     /**
      * 1. 第二个参数如何来的?

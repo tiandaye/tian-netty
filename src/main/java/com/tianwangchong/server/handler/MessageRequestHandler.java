@@ -5,6 +5,7 @@ import com.tianwangchong.protocol.response.MessageResponsePacket;
 import com.tianwangchong.session.Session;
 import com.tianwangchong.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -16,7 +17,15 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * Author: tianwangchong@bongmi.com
  */
 
+// 单例
+@ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+    public static final MessageRequestHandler INSTANCE = new MessageRequestHandler();
+
+    private MessageRequestHandler() {
+
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) {
         // 1. 拿到消息发送方的会话信息

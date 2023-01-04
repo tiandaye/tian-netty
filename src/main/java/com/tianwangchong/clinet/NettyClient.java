@@ -3,6 +3,7 @@ package com.tianwangchong.clinet;
 import com.tianwangchong.clinet.console.ConsoleCommandManager;
 import com.tianwangchong.clinet.console.LoginConsoleCommand;
 import com.tianwangchong.clinet.handler.CreateGroupResponseHandler;
+import com.tianwangchong.clinet.handler.GroupMessageResponseHandler;
 import com.tianwangchong.clinet.handler.JoinGroupResponseHandler;
 import com.tianwangchong.clinet.handler.ListGroupMembersResponseHandler;
 import com.tianwangchong.clinet.handler.LoginResponseHandler;
@@ -101,6 +102,8 @@ public class NettyClient {
                         ch.pipeline().addLast(new QuitGroupResponseHandler());
                         // 获取群成员响应处理器
                         ch.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        // 群消息响应
+                        ch.pipeline().addLast(new GroupMessageResponseHandler());
                         // 登出响应处理器
                         ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());

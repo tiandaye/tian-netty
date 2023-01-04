@@ -1,16 +1,10 @@
 package com.tianwangchong.server;
 
-import com.tianwangchong.codec.PacketDecoder;
-import com.tianwangchong.codec.PacketEncoder;
+import com.tianwangchong.codec.PacketCodecHandler;
 import com.tianwangchong.codec.Spliter;
 import com.tianwangchong.server.handler.AuthHandler;
-import com.tianwangchong.server.handler.CreateGroupRequestHandler;
-import com.tianwangchong.server.handler.JoinGroupRequestHandler;
-import com.tianwangchong.server.handler.ListGroupMembersRequestHandler;
+import com.tianwangchong.server.handler.IMHandler;
 import com.tianwangchong.server.handler.LoginRequestHandler;
-import com.tianwangchong.server.handler.LogoutRequestHandler;
-import com.tianwangchong.server.handler.MessageRequestHandler;
-import com.tianwangchong.server.handler.QuitGroupRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -111,23 +105,29 @@ public class NettyServer {
                         // 基于长度域拆包器
                         // ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
                         ch.pipeline().addLast(new Spliter());
-                        ch.pipeline().addLast(new PacketDecoder());
-                        // 登录请求处理器
-                        ch.pipeline().addLast(new LoginRequestHandler());
-                        ch.pipeline().addLast(new AuthHandler());
-                        // 单聊消息请求处理器
-                        ch.pipeline().addLast(new MessageRequestHandler());
-                        // 创建群请求处理器
-                        ch.pipeline().addLast(new CreateGroupRequestHandler());
-                        // 加群请求处理器
-                        ch.pipeline().addLast(new JoinGroupRequestHandler());
-                        // 退群请求处理器
-                        ch.pipeline().addLast(new QuitGroupRequestHandler());
-                        // 获取群成员请求处理器
-                        ch.pipeline().addLast(new ListGroupMembersRequestHandler());
-                        // 登出请求处理器
-                        ch.pipeline().addLast(new LogoutRequestHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
+                        // 1. 改为单例(不用每次都new) 2. 处理器太多改为平行(合并平行 handler) 3. 编码和解码和为1个(合并编解码器, pipeline 中第一个 handler - Spliter，我们是无法动它的，因为他内部实现是与每个 channel 有关，每个 Spliter 需要维持每个 channel 当前读到的数据，也就是说他是有状态的。 而 PacketDecoder 与 PacketEncoder 我们是可以继续改造的，Netty 内部提供了一个类，叫做 MessageToMessageCodec，使用它可以让我们的编解码操作放到一个类里面去实现，首先我们定义一个 PacketCodecHandler)
+                        ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                        // 单例模式，多个 channel 共享同一个 handler
+                        ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                        ch.pipeline().addLast(AuthHandler.INSTANCE);
+                        ch.pipeline().addLast(IMHandler.INSTANCE);
+                        // ch.pipeline().addLast(new PacketDecoder());
+                        // // 登录请求处理器
+                        // ch.pipeline().addLast(new LoginRequestHandler());
+                        // ch.pipeline().addLast(new AuthHandler());
+                        // // 单聊消息请求处理器
+                        // ch.pipeline().addLast(new MessageRequestHandler());
+                        // // 创建群请求处理器
+                        // ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        // // 加群请求处理器
+                        // ch.pipeline().addLast(new JoinGroupRequestHandler());
+                        // // 退群请求处理器
+                        // ch.pipeline().addLast(new QuitGroupRequestHandler());
+                        // // 获取群成员请求处理器
+                        // ch.pipeline().addLast(new ListGroupMembersRequestHandler());
+                        // // 登出请求处理器
+                        // ch.pipeline().addLast(new LogoutRequestHandler());
+                        // ch.pipeline().addLast(new PacketEncoder());
 
                         /**
                          * StringDecoder
